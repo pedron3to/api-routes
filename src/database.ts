@@ -1,14 +1,10 @@
-import knex, { Knex } from "knex";
+import { knex as setupKnex, Knex } from "knex";
 import { env } from "./env";
-
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not defined");
-}
 
 export const config: Knex.Config = {
   client: "sqlite",
   connection: {
-    filename: process.env.DATABASE_URL,
+    filename: env.DATABASE_URL,
   },
   useNullAsDefault: true,
   migrations: {
@@ -17,4 +13,4 @@ export const config: Knex.Config = {
   },
 };
 
-export const knexProvider = knex(config);
+export const knex = setupKnex(config);
